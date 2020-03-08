@@ -1,0 +1,29 @@
+version: '3.4'
+services:
+  volunteered_genalg.com:
+    build: .
+    ports:
+    - "12345:12345"
+    domainname: volunteered_genalg.com
+    hostname: volunteered_genalg.com
+    volumes:
+    - .:/code
+    tty: true
+  node1:
+    build: .
+    ports:
+    - "12346:12346"
+    domainname: node1.com
+    hostname: node1
+    volumes:
+    - .:/code
+    tty: true
+  node2:
+    build: .
+    ports:
+    - "12347:12347"
+    domainname: node2.com
+    hostname: node2
+    volumes:
+    - .:/code
+    tty: true
