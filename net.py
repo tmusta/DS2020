@@ -45,13 +45,13 @@ def in_table(table, address):
     
 def compute_genalg(max_iterations=10):
     i = 0
-    global ON
+
     global new_results
     global status
     while True:
         if status["qid"]:
             while i < max_iterations:
-                ON = False
+
                 #problem = np.reshape(np.fromstring(status["p"]), (DEGREE, -1))
                 #solution = np.reshape(np.fromstring(status["s"]), (BATCH, -1))
                 problem = np.reshape(np.asarray(status["p"]), (DEGREE, -1))
@@ -65,8 +65,9 @@ def compute_genalg(max_iterations=10):
 
             history[status["qid"]] = {"p": status["p"], "s": status["s"][0], "scr": status["scr"]}
             i = 0
+            print("\nGENALG ID:" + status["qid"] + " FINISHED\n")
             status["qid"] = 0
-            print(i, max_iterations, status["qid"])
+            #print(i, max_iterations, status["qid"])
         sleep(1)
 
 def save():
@@ -87,10 +88,10 @@ def sol():
 
 def IO():
     global status
-    global ON
+
     global port
     global host
-    while ON:
+    while True:
         c = input("CTRL+c=quit, s=status, p=generate_problem: \n")
         if c == "s" or c == "status":
             print(status)
@@ -105,7 +106,7 @@ def IO():
             
 def check_connections():
     global status
-    global ON
+
     while True:
         for i in status["table"]:
             if  i["port"] == port and i["address"] == host:
@@ -120,7 +121,7 @@ def check_connections():
 def f_connection(c, address):
     global status
     #print("f New connection to ", address)
-    global ON
+
     #status["table"].append({"port":address[0], "address": address[1], "c": True})
     #connection = {"port": address[1], "address": address[0], "c": True}
     #if not in_table(status, connection):
@@ -172,7 +173,7 @@ def m_connection(add, p):
         print("New connection to ", add)
         #c, addr = socket.create_connection((i["address"], i["port"]))
         msg = None
-        global ON
+
         try:
             while True:
                 if not msg:
@@ -235,10 +236,10 @@ def Main():
     global port
     global host
     
-    global ON
+
     global new_results
     global status
-    ON = True
+   
     port = 12345#int(sys.argv[1])
     #host = "localhost"
     print(host, port, "gg")
@@ -284,6 +285,6 @@ if __name__=="__main__":
     try:
         Main()
     except KeyboardInterrupt:
-        print("USER CLOSED PROGRAM")
+        print("\nUSER CLOSED PROGRAM")
         save()
     
